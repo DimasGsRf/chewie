@@ -109,7 +109,7 @@ class ChewieState extends State<Chewie> {
     return WillPopScope(
       onWillPop: () async {
         widget.controller.exitFullScreen();
-        widget.controller.exit;
+        widget.controller.exit?.call();
         // exitAndBack(context);
         return Future<bool>.value(true);
       },
@@ -130,7 +130,7 @@ class ChewieState extends State<Chewie> {
           ),
           leading: IconButton(
             onPressed: () {
-              widget.controller.exit;
+              widget.controller.exit?.call();
               // exitAndBack(context);
             },
             icon: const Icon(Icons.arrow_back),
