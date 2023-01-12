@@ -108,7 +108,9 @@ class ChewieState extends State<Chewie> {
   ) {
     return WillPopScope(
       onWillPop: () async {
-        exitAndBack(context);
+        widget.controller.exitFullScreen();
+        widget.controller.exit;
+        // exitAndBack(context);
         return Future<bool>.value(true);
       },
       child: Scaffold(
@@ -128,7 +130,8 @@ class ChewieState extends State<Chewie> {
           ),
           leading: IconButton(
             onPressed: () {
-              exitAndBack(context);
+              widget.controller.exit;
+              // exitAndBack(context);
             },
             icon: const Icon(Icons.arrow_back),
           ),
@@ -322,6 +325,7 @@ class ChewieController extends ChangeNotifier {
     this.controlsSafeAreaMinimum = EdgeInsets.zero,
     this.fromRoute = "",
     this.title = "Default",
+    this.exit,
   }) : assert(
           playbackSpeeds.every((speed) => speed > 0),
           'The playbackSpeeds values must all be greater than 0',
@@ -572,6 +576,8 @@ class ChewieController extends ChangeNotifier {
   final String title;
 
   final String fromRoute;
+
+  final Function? exit;
 
   static ChewieController of(BuildContext context) {
     final chewieControllerProvider =
