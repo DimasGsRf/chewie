@@ -105,10 +105,10 @@ class ChewieState extends State<Chewie> {
         widget.controller.fromRoute,
         ModalRoute.withName(widget.controller.fromRoute),
       );
-      widget.controller.exitFullScreen();
-      widget.controller.videoPlayerController.dispose();
-      Navigator.of(context).pop();
     });
+    widget.controller.exitFullScreen();
+    widget.controller.videoPlayerController.dispose();
+    Navigator.of(context).pop();
   }
 
   Widget _buildFullScreenVideo(
