@@ -100,10 +100,14 @@ class ChewieState extends State<Chewie> {
     // Navigator.of(context).pop();
     // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Navigator.pushReplacementNamed(context, widget.controller.fromRoute);
-      Navigator.of(context).pop();
-      SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        widget.controller.fromRoute,
+        ModalRoute.withName(widget.controller.fromRoute),
+      );
+      // Navigator.pushReplacementNamed(context, widget.controller.fromRoute);
     });
+    Navigator.of(context).pop();
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   }
 
   Widget _buildFullScreenVideo(
