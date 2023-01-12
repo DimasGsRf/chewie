@@ -92,14 +92,14 @@ class ChewieState extends State<Chewie> {
     );
   }
 
-  void exitAndBack(BuildContext context) async {
+  void exitAndBack(BuildContext context) {
     // Navigator.of(context).pushNamedAndRemoveUntil(
     //   widget.controller.fromRoute,
     //   ModalRoute.withName(widget.controller.fromRoute),
     // );
     // Navigator.of(context).pop();
     // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.of(context).pushNamedAndRemoveUntil(
         widget.controller.fromRoute,
