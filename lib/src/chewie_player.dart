@@ -104,8 +104,9 @@ class ChewieState extends State<Chewie> {
         widget.controller.fromRoute,
         ModalRoute.withName(widget.controller.fromRoute),
       );
-      // Navigator.pushReplacementNamed(context, widget.controller.fromRoute);
     });
+    widget.controller.exitFullScreen();
+    widget.controller.videoPlayerController.dispose();
     Navigator.of(context).pop();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   }
