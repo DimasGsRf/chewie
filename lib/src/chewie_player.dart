@@ -93,12 +93,17 @@ class ChewieState extends State<Chewie> {
   }
 
   void exitAndBack(BuildContext context) {
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      widget.controller.fromRoute,
-      ModalRoute.withName(widget.controller.fromRoute),
-    );
-    Navigator.of(context).pop();
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    // Navigator.of(context).pushNamedAndRemoveUntil(
+    //   widget.controller.fromRoute,
+    //   ModalRoute.withName(widget.controller.fromRoute),
+    // );
+    // Navigator.of(context).pop();
+    // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Navigator.pushReplacementNamed(context, widget.controller.fromRoute);
+      Navigator.of(context).pop();
+      SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    });
   }
 
   Widget _buildFullScreenVideo(
@@ -106,12 +111,40 @@ class ChewieState extends State<Chewie> {
     Animation<double> animation,
     ChewieControllerProvider controllerProvider,
   ) {
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
-      alignment: Alignment.center,
-      color: Colors.black,
-      child: controllerProvider,
+    return WillPopScope(
+      onWillPop: () async {
+        exitAndBack(context);
+        return Future<bool>.value(true);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          iconTheme:
+              const IconThemeData(color: Color.fromRGBO(255, 255, 255, 1.0)),
+          actionsIconTheme:
+              const IconThemeData(color: Color.fromRGBO(255, 255, 255, 1.0)),
+          elevation: 0.1,
+          backgroundColor: const Color.fromRGBO(0, 0, 0, 1.0),
+          title: Text(
+            widget.controller.title,
+            style: const TextStyle(
+              fontFamily: "MMCOFFICE-Regular",
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          leading: IconButton(
+            onPressed: () {
+              exitAndBack(context);
+            },
+            icon: const Icon(Icons.arrow_back),
+          ),
+        ),
+        resizeToAvoidBottomInset: false,
+        body: Container(
+          alignment: Alignment.center,
+          color: Colors.black,
+          child: controllerProvider,
+        ),
+      ),
     );
   }
 
@@ -294,7 +327,6 @@ class ChewieController extends ChangeNotifier {
     this.controlsSafeAreaMinimum = EdgeInsets.zero,
     this.fromRoute = "",
     this.title = "Default",
-    this.exit,
   }) : assert(
           playbackSpeeds.every((speed) => speed > 0),
           'The playbackSpeeds values must all be greater than 0',
@@ -545,8 +577,6 @@ class ChewieController extends ChangeNotifier {
   final String title;
 
   final String fromRoute;
-
-  final Function? exit;
 
   static ChewieController of(BuildContext context) {
     final chewieControllerProvider =
