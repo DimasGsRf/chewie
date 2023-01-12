@@ -99,7 +99,6 @@ class ChewieState extends State<Chewie> {
     // );
     // Navigator.of(context).pop();
     // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Navigator.of(context).pushNamedAndRemoveUntil(
         widget.controller.fromRoute,
@@ -118,7 +117,9 @@ class ChewieState extends State<Chewie> {
   ) {
     return WillPopScope(
       onWillPop: () async {
-        exitAndBack(context);
+        await SystemChrome.setPreferredOrientations(
+                [DeviceOrientation.portraitUp])
+            .then((value) => exitAndBack(context));
         return Future<bool>.value(true);
       },
       child: Scaffold(
@@ -137,8 +138,10 @@ class ChewieState extends State<Chewie> {
             ),
           ),
           leading: IconButton(
-            onPressed: () {
-              exitAndBack(context);
+            onPressed: () async {
+              await SystemChrome.setPreferredOrientations(
+                      [DeviceOrientation.portraitUp])
+                  .then((value) => exitAndBack(context));
             },
             icon: const Icon(Icons.arrow_back),
           ),
