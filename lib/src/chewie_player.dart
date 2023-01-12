@@ -107,7 +107,7 @@ class ChewieState extends State<Chewie> {
     ChewieControllerProvider controllerProvider,
   ) {
     return Container(
-      height: kToolbarHeight,
+      height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.center,
       color: Colors.black,
