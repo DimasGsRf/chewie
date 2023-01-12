@@ -93,11 +93,13 @@ class ChewieState extends State<Chewie> {
   }
 
   void exitAndBack(BuildContext context) {
-    Navigator.of(context).pushNamedAndRemoveUntil(
-      widget.controller.fromRoute,
-      ModalRoute.withName(widget.controller.fromRoute),
-    );
+    // Navigator.of(context).pushNamedAndRemoveUntil(
+    //   widget.controller.fromRoute,
+    //   ModalRoute.withName(widget.controller.fromRoute),
+    // );
     Navigator.of(context).pop();
+    Navigator.of(context).pop();
+
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   }
 
