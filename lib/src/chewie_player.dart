@@ -106,8 +106,6 @@ class ChewieState extends State<Chewie> {
           ModalRoute.withName(widget.controller.fromRoute),
         );
       });
-      widget.controller.exitFullScreen();
-      widget.controller.videoPlayerController.dispose();
       Navigator.of(context).pop();
     });
   }
@@ -118,10 +116,8 @@ class ChewieState extends State<Chewie> {
     ChewieControllerProvider controllerProvider,
   ) {
     return WillPopScope(
-      onWillPop: () async {
-        await SystemChrome.setPreferredOrientations(
-                [DeviceOrientation.portraitUp])
-            .then((value) => exitAndBack(context));
+      onWillPop: () {
+        exitAndBack(context);
         return Future<bool>.value(true);
       },
       child: Scaffold(
@@ -141,9 +137,7 @@ class ChewieState extends State<Chewie> {
           ),
           leading: IconButton(
             onPressed: () async {
-              await SystemChrome.setPreferredOrientations(
-                      [DeviceOrientation.portraitUp])
-                  .then((value) => exitAndBack(context));
+              exitAndBack(context);
             },
             icon: const Icon(Icons.arrow_back),
           ),
