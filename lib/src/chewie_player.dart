@@ -106,43 +106,10 @@ class ChewieState extends State<Chewie> {
     Animation<double> animation,
     ChewieControllerProvider controllerProvider,
   ) {
-    return WillPopScope(
-      onWillPop: () async {
-        widget.controller.exitFullScreen();
-        widget.controller.exit?.call();
-        // exitAndBack(context);
-        return Future<bool>.value(true);
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          iconTheme:
-              const IconThemeData(color: Color.fromRGBO(255, 255, 255, 1.0)),
-          actionsIconTheme:
-              const IconThemeData(color: Color.fromRGBO(255, 255, 255, 1.0)),
-          elevation: 0.1,
-          backgroundColor: const Color.fromRGBO(0, 0, 0, 1.0),
-          title: Text(
-            widget.controller.title,
-            style: const TextStyle(
-              fontFamily: "MMCOFFICE-Regular",
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          leading: IconButton(
-            onPressed: () {
-              widget.controller.exit?.call();
-              // exitAndBack(context);
-            },
-            icon: const Icon(Icons.arrow_back),
-          ),
-        ),
-        resizeToAvoidBottomInset: false,
-        body: Container(
-          alignment: Alignment.center,
-          color: Colors.black,
-          child: controllerProvider,
-        ),
-      ),
+    return Container(
+      alignment: Alignment.center,
+      color: Colors.black,
+      child: controllerProvider,
     );
   }
 
