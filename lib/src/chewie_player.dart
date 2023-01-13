@@ -93,17 +93,28 @@ class ChewieState extends State<Chewie> {
   }
 
   void exitAndBack(BuildContext context) async {
-    await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-        .then((value) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (widget.controller.fromRoute != "/main") {
+      await SystemChrome.setPreferredOrientations(
+          [DeviceOrientation.portraitUp]).then((value) {
         Navigator.of(context).pushNamedAndRemoveUntil(
           widget.controller.fromRoute,
           ModalRoute.withName(widget.controller.fromRoute),
         );
+        Navigator.of(context).pop();
       });
+    } else {
+      await SystemChrome.setPreferredOrientations(
+          [DeviceOrientation.portraitUp]).then((value) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            widget.controller.fromRoute,
+            ModalRoute.withName(widget.controller.fromRoute),
+          );
+        });
 
-      Navigator.of(context).pop();
-    });
+        Navigator.of(context).pop();
+      });
+    }
   }
 
   Widget _buildFullScreenVideo(
