@@ -93,6 +93,7 @@ class ChewieState extends State<Chewie> {
   }
 
   void exitAndBack(BuildContext context) async {
+    widget.controller.videoPlayerController.dispose();
     if (widget.controller.fromRoute != "/main") {
       SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
       Navigator.of(context).pushNamedAndRemoveUntil(
