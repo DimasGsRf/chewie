@@ -104,12 +104,12 @@ class ChewieState extends State<Chewie> {
     } else {
       await SystemChrome.setPreferredOrientations(
           [DeviceOrientation.portraitUp]).then((value) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.of(context).pushNamedAndRemoveUntil(
-            widget.controller.fromRoute,
-            ModalRoute.withName(widget.controller.fromRoute),
-          );
-        });
+        // WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          widget.controller.fromRoute,
+          ModalRoute.withName(widget.controller.fromRoute),
+        );
+        // });
         Navigator.of(context).pop();
       });
     }
