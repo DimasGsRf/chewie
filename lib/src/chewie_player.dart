@@ -101,6 +101,7 @@ class ChewieState extends State<Chewie> {
           ModalRoute.withName(widget.controller.fromRoute),
         );
       });
+
       Navigator.of(context).pop();
     });
   }
